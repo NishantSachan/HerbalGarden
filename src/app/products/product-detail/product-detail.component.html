@@ -1,0 +1,70 @@
+<div class="card">
+    <div class="class-header bg-primary" *ngIf ="product">
+        {{pageTitle +":" +product.productName}}
+    </div>
+    <div class="card-body" *ngIf="errorMessage" class="bg-danger text-white m-2 p-2">
+        {{errorMessage | json}}
+    </div>
+    <div class="card-body" *ngIf="product">
+        <div class="row">
+            <div class="col-md-4" *ngIf="product.imageUrl">
+                <img class="center-block img-responsive" 
+            [src]="product.imageUrl"
+            [title]="product.productName"
+            [style.width.px]="imageWidth"
+            [style.margin.px]="imageMargin">
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-3">Name</div>
+                    <div class="col-md-6">{{product.productName}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">Code</div>
+                    <div class="col-md-6">{{product.productCode}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">Description</div>
+                    <div class="col-md-6">{{product.description}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">Price</div>
+                    <div class="col-md-6">{{product.price | currency:'USD':'symbol':'1.2-2'}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">Release Date</div>
+                    <div class="col-md-6">{{product.releaseDate | date:'fullDate'}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">Tags</div>
+                    <div class="col-md-6">{{product.tags}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">Rating</div>
+                    <div class="col-md-6"><app-star [rating]="product.starRating"
+                        ></app-star></div>
+                    <!-- <td><app-star [rating]="product.starRating"
+                        (ratingClicked)="onRatingClicked($event)"></app-star></td> -->
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+<div class="row mt-4">
+    <div class="col-md-4">
+        <button class="btn btn-outline-secondary mr-3"
+        style="width :80px"
+        (click)="onBack()">
+        <i class="fa fa-chevron-left"></i>BACK</button>
+    </div>
+    <div class="col-md-4" *ngIf="userIsAuthenticated">
+        <button class="btn btn-outline-secondary mr-3"
+        style="width :80px"
+        (click)="onEdit()">EDIT</button>
+        <button class="btn btn-outline-secondary mr-3"
+        style="width :80px"
+        (click)="delete()">DELETE</button>
+    </div>
+
+</div>

@@ -1,0 +1,52 @@
+<div class="m-2">
+    <div class="bg-primary text-white">
+    Selected Product : {{pdtMessage || ('None')}}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2">
+        <h4>Filter By</h4>
+
+    </div>
+    <div class="col-md-4">
+        <input type="text" [(ngModel)]="listFilter"/>
+    </div>
+    <div>
+        <h4>Filtered By : {{listFilter}}</h4>
+    </div>
+
+</div>
+<div *ngIf="products$ | async as products">
+<table class="table table-sm table-striped table-bordered mt-2">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th><button (click)="toggleImage()">{{showImage? "Hide Image":"Show Image"}}</button></th>
+        <th>Product Name</th>
+        <th>Category</th>
+        <th>Price</th>
+        
+        <th>Release Date</th>
+        <th>Rating</th>
+    </tr>
+    </thead>
+    <tr *ngFor="let product of products; let i=index" [class.bg-danger]="getSelected(product)">
+        <td (mouseover)="selectedProduct=product.productName">{{i+1}}</td>
+        <td><img *ngIf="showImage" 
+            [src]="product.imageUrl"
+            [title]="product.productName"
+            [style.width.px]="imageWidth"
+            [style.margin.px]="imageMargin"></td>
+        <td>
+            <a [routerLink]="['/products',product.id]">{{product.productName | uppercase}}</a>
+        </td>
+        <td>{{product.productCode | lowercase | convertToSpaces:'-'}}</td>
+        <td>{{product.price | currency:'USD':'symbol':'1.2-2'}}</td>
+        
+        <td>{{product.releaseDate | date:'fullDate'}}</td>
+        <td><app-star [rating]="product.starRating"
+            (ratingClicked)="onRatingClicked($event)"></app-star></td>
+        
+    </tr>
+</table>
+</div>
